@@ -20,7 +20,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 public class MainActivity extends AppCompatActivity {
-    Button infob,entButton,rButton;
+    Button infob,entButton,rButton,lgoutB;
     InputStream is;
     InputStreamReader isr;
     BufferedReader br;
@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        PreferenceManager pref=new PreferenceManager(this);
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
@@ -44,6 +45,16 @@ public class MainActivity extends AppCompatActivity {
 
 
 });
+        if (!pref.isAutoLog())
+            lgoutB.setAlpha(0.0f);
+        else
+            lgoutB.setAlpha(1);
+        lgoutB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pref.setAutolog(false);
+            }
+        });
 
     entButton.setOnClickListener(new View.OnClickListener() {
         @Override
@@ -120,7 +131,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void initcomp()
-    {   rButton=findViewById(R.id.button3);
+    {   lgoutB=findViewById(R.id.button5);
+        rButton=findViewById(R.id.button3);
         editText=findViewById(R.id.editTextText);
         infob=findViewById(R.id.infoB);
         entButton=findViewById(R.id.button2);

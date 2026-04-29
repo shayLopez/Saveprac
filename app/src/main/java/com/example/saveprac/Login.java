@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -16,6 +17,7 @@ import androidx.core.view.WindowInsetsCompat;
 public class Login extends AppCompatActivity {
     EditText userN, pasoremail;
     Button button;
+    CheckBox remem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +33,12 @@ public class Login extends AppCompatActivity {
         initcomp();
 
         PreferenceManager pref = new PreferenceManager(this);
-
+if (pref.isAutoLog())
+{
+    startActivity(new Intent(Login.this, MainActivity.class));
+    finish();
+}
+else {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -42,6 +49,8 @@ public class Login extends AppCompatActivity {
                 if (enteredUser.equals(pref.getUsername()) &&
                         (enteredPassOrEmail.equals(pref.getPassword()) ||
                                 enteredPassOrEmail.equals(pref.getEmail()))) {
+                        if (remem.isChecked())
+                            pref.setAutolog(true);
 
                     startActivity(new Intent(Login.this, MainActivity.class));
                     finish();
@@ -51,8 +60,10 @@ public class Login extends AppCompatActivity {
             }
         });
     }
+    }
 
     public void initcomp() {
+        remem=findViewById(R.id.checkBox);
         userN = findViewById(R.id.editTextText2);
         pasoremail = findViewById(R.id.editTextText3);
         button = findViewById(R.id.button);

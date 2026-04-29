@@ -30,11 +30,18 @@ public class Register extends AppCompatActivity {
 
         initComp();
         PreferenceManager preferenceManager = new PreferenceManager(this);
-
-        if (preferenceManager.isRegistered()) {
+        if (preferenceManager.isAutoLog()&&preferenceManager.isRegistered())
+        {
+            startActivity(new Intent(this, MainActivity.class));
+            finish();
+        }
+        else if (preferenceManager.isRegistered())
+        {
             startActivity(new Intent(this, Login.class));
             finish();
-        } else {
+        }
+        else
+        {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -51,7 +58,8 @@ public class Register extends AppCompatActivity {
                     else if (email.isEmpty())
                         Toast.makeText(Register.this, "Enter an E-mail", Toast.LENGTH_SHORT).show();
 
-                    else {
+                    else
+                    {
                         preferenceManager.saveUsername(username);
                         preferenceManager.savePassword(pass);
                         preferenceManager.saveEmail(email);

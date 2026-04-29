@@ -9,6 +9,7 @@ public class PreferenceManager {
     private static final String KEY_USERNAME = "username";
     private static final String KEY_PASSWORD = "password";
     private static final String KEY_EMAIL = "email";
+    private static final String KEY_AUTOLOG="autolog";
 
     private SharedPreferences sharedPref;
 
@@ -24,6 +25,12 @@ public class PreferenceManager {
     public boolean isRegistered() {
         return sharedPref.getBoolean(KEY_IS_REGISTERED, false);
     }
+
+    public void setAutolog(boolean autolog)
+    {
+        sharedPref.edit().putBoolean(KEY_AUTOLOG,autolog).apply();
+    }
+    public boolean isAutoLog(){return sharedPref.getBoolean(KEY_AUTOLOG,false);}
 
     // ---------- USERNAME ----------
     public void saveUsername(String name) {
